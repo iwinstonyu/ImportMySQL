@@ -9,10 +9,10 @@ set SRC_DB_PORT=3308
 set SRC_DB_USER=lp
 set SRC_DB_NAME=lobby_slg_qa1
 
-set TAR_DB_IP=172.24.140.38
-set TAR_DB_PORT=3308
+set TAR_DB_IP=127.0.0.1
+set TAR_DB_PORT=3307
 set TAR_DB_USER=lp
-set TAR_DB_NAME=lobby_slg_preview
+set TAR_DB_NAME=lobby_slg
 
 echo MYSQL_PATH: %MYSQL_PATH%
 echo SRC_DB: %SRC_DB_IP% %SRC_DB_PORT% %SRC_DB_USER% %SRC_DB_NAME%
