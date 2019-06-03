@@ -7,12 +7,12 @@ set MYSQL_PATH="C:\Program Files\MySQL\MySQL Server 5.7\bin"
 set SRC_DB_IP=172.24.140.38
 set SRC_DB_PORT=3308
 set SRC_DB_USER=lp
-set SRC_DB_NAME=lobby_slg
+set SRC_DB_NAME=lobby_slg_qa1
 
-set TAR_DB_IP=127.0.0.1
-set TAR_DB_PORT=3307
+set TAR_DB_IP=172.24.140.38
+set TAR_DB_PORT=3308
 set TAR_DB_USER=lp
-set TAR_DB_NAME=lobby_new
+set TAR_DB_NAME=lobby_slg_preview
 
 echo MYSQL_PATH: %MYSQL_PATH%
 echo SRC_DB: %SRC_DB_IP% %SRC_DB_PORT% %SRC_DB_USER% %SRC_DB_NAME%
@@ -42,7 +42,7 @@ echo.
 
 echo Start replace name of database and clear definer
 echo Start generate target file to: %tar_file%
-quick.py -s%src_file% -t%tar_file% -d%SRC_DB_NAME% -e%TAR_DB_NAME%
+Import.py -s%src_file% -t%tar_file% -d%SRC_DB_NAME% -e%TAR_DB_NAME%
 echo.
 
 echo Start import data from: %tar_file%
