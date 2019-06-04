@@ -24,7 +24,6 @@ if  "%time:~0,1%"==" " (
 ) else (   
     set str_date_time=%date:~0,4%_%date:~5,2%_%date:~8,2%_%time:~0,2%_%time:~3,2%_%time:~6,2%
 )
-set str_date_time=2019_05_31_14_28_58
 
 set src_file=%~dp0src_%SRC_DB_NAME%_%str_date_time%.sql
 set tar_file=%~dp0tar_%TAR_DB_NAME%_%str_date_time%.sql
