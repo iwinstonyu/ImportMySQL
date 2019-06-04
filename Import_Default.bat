@@ -44,10 +44,20 @@ echo Start generate target file to: %tar_file%
 Import.py -s%src_file% -t%tar_file% -d%SRC_DB_NAME% -e%TAR_DB_NAME%
 echo.
 
+set /P makesure=确认将数据导入目标数据库吗?(Y/[N])
+if /I "%makesure%" NEQ "Y" (
+	echo 取消导入数据
+	goto end
+) else (
+	echo 开始导入数据
+)
+echo.
+
 echo Start import data from: %tar_file%
 cd /d %MYSQL_PATH%
 mysql -h%TAR_DB_IP% -u%TAR_DB_USER% -p -P%TAR_DB_PORT% < %tar_file% >%log_file% 2>&1
 cd /d %~dp0
 echo.
 
+:end
 pause

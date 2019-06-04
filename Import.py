@@ -1,9 +1,3 @@
-import json
-from pprint import pprint
-from collections import OrderedDict
-
-import mysql.connector
-from mysql.connector import errorcode
 import getopt
 import os
 import sys
