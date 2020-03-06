@@ -2,27 +2,38 @@
 
 Setlocal EnableDelayedExpansion 
 
+rem mysqldump所在路径
 set MYSQL_PATH="C:\Program Files\MySQL\MySQL Server 5.7\bin"
 
-set SRC_DB_IP=172.24.140.38
-set SRC_DB_PORT=3308
-set SRC_DB_USER=lp
-set SRC_DB_NAME=lobby_slg_qa1
+rem 源数据库地址
+set SRC_DB_IP=127.0.0.1
+set SRC_DB_PORT=3307
+set SRC_DB_USER=test
+set SRC_DB_NAME=db1
 
+rem 目的数据库地址
 set TAR_DB_IP=127.0.0.1
 set TAR_DB_PORT=3307
-set TAR_DB_USER=lp
-set TAR_DB_NAME=lobby_slg
+set TAR_DB_USER=test
+set TAR_DB_NAME=db2
+
+rem 不导出数据的表
+set NO_DATA_TABLE=table1 table2
+set NO_DATA_TABLE_CMD=
+for %%a in (%NO_DATA_TABLE%) do (
+	set NO_DATA_TABLE_CMD=!NO_DATA_TABLE_CMD! --ignore-table=!SRC_DB_NAME!.%%a 
+)
 
 echo MYSQL_PATH: %MYSQL_PATH%
 echo SRC_DB: %SRC_DB_IP% %SRC_DB_PORT% %SRC_DB_USER% %SRC_DB_NAME%
 echo TAR_DB: %TAR_DB_IP% %TAR_DB_PORT% %TAR_DB_USER% %TAR_DB_NAME%
+echo NO_DATA_TABLE_CMD: %NO_DATA_TABLE_CMD%
 echo.
 
 if  "%time:~0,1%"==" " (  
-    set str_date_time=%date:~0,4%_%date:~5,2%_%date:~8,2%_0%time:~1,1%_%time:~3,2%_%time:~6,2%
+    set str_date_time=%date:~0,4%%date:~5,2%%date:~8,2%_0%time:~1,1%%time:~3,2%%time:~6,2%
 ) else (   
-    set str_date_time=%date:~0,4%_%date:~5,2%_%date:~8,2%_%time:~0,2%_%time:~3,2%_%time:~6,2%
+    set str_date_time=%date:~0,4%%date:~5,2%%date:~8,2%_%time:~0,2%%time:~3,2%%time:~6,2%
 )
 
 set src_file=%~dp0src_%SRC_DB_NAME%_%str_date_time%.sql
@@ -35,7 +46,8 @@ echo.
 
 echo Start export data to: %src_file%
 cd /d %MYSQL_PATH%
-mysqldump -h%SRC_DB_IP% -u%SRC_DB_USER% -p -P%SRC_DB_PORT% --databases %SRC_DB_NAME% --routines --add-drop-database --events --hex-blob > %src_file%
+mysqldump -h%SRC_DB_IP% -u%SRC_DB_USER% -p -P%SRC_DB_PORT% --databases %SRC_DB_NAME% --routines --add-drop-database --events --no-data > %src_file%
+mysqldump -h%SRC_DB_IP% -u%SRC_DB_USER% -p -P%SRC_DB_PORT% --databases %SRC_DB_NAME% --hex-blob %NO_DATA_TABLE_CMD% >> %src_file%
 cd /d %~dp0
 echo.
 
