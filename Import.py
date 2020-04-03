@@ -35,7 +35,7 @@ f_src = open(src_file, "rb")
 f_tar = open(tar_file, "wb")
 for line in f_src:
 	new_line = line.decode()
-	if "lobby_slg" in new_line:
+	if src_dbname in new_line:
 		new_line = new_line.replace(src_dbname, tar_dbname)
 	new_line = re.sub(r"DEFINER=.*? ", "", new_line)
 	f_tar.write(new_line.encode())
